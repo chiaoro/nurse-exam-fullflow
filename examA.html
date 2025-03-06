@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A卷考場</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 30px; }
+        #timer { font-size: 36px; color: red; margin: 10px 0; }
+        iframe { width: 90%; height: 500px; }
+        .end-message { display: none; font-size: 24px; color: green; }
+    </style>
+    <script>
+        const endTime = Date.now() + 60 * 60 * 1000;
+
+        function updateTimer() {
+            const diff = endTime - Date.now();
+            if (diff <= 0) {
+                document.getElementById('formFrame').style.display = 'none';
+                document.getElementById('endMessage').style.display = 'block';
+                clearInterval(timerInterval);
+            } else {
+                const m = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
+                const s = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+                document.getElementById('timer').innerText = `00:${m}:${s}`;
+            }
+        }
+
+        let timerInterval = setInterval(updateTimer, 1000);
+    </script>
+</head>
+<body>
+    <h1>A卷考場頁面</h1>
+    <div id="timer">60:00</div>
+    <iframe id="formFrame" src="https://docs.google.com/forms/d/e/1FAIpQLSdDMSuR47DPyr6wdqCtrPlmHl610_QrCX1g_zvjeExp5GYicQ/viewform"></iframe>
+    <p id="endMessage" class="end-message">考試時間結束，請停止作答！</p>
+</body>
+</html>
