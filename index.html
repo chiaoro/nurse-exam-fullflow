@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>專科護理師線上筆試倒數</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        #timer { font-size: 48px; color: red; margin: 20px 0; }
+        p { font-size: 18px; }
+    </style>
+    <script>
+        const targetTime = new Date('2025-03-13T16:30:00+08:00').getTime();
+        const examPageA = 'examA.html';
+        const examPageB = 'examB.html';
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetTime - now;
+
+            if (diff <= 0) {
+                clearInterval(timerInterval);
+                const destination = Math.random() < 0.5 ? examPageA : examPageB;
+                window.location.href = destination;
+            } else {
+                const days = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+                const minutes = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
+                const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+                document.getElementById('timer').innerText = `${days}:${hours}:${minutes}:${seconds}`;
+            }
+        }
+
+        let timerInterval = setInterval(updateCountdown, 1000);
+    </script>
+</head>
+<body>
+    <h1>專科護理師線上筆試倒數</h1>
+    <p>請保持此頁開啟，考試時間到將自動進入考場。</p>
+    <div id="timer">--:--:--:--</div>
+</body>
+</html>
